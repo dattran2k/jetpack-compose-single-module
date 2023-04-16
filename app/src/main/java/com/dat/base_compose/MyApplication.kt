@@ -1,13 +1,10 @@
 package com.dat.base_compose
 
 import android.app.Application
-import com.dat.base_compose.BuildConfig
 import com.dat.base_compose.common.Constants
 import com.dat.base_compose.utils.InternetUtil
 import com.dat.base_compose.utils.LogsUtil
 import com.dat.base_compose.utils.PreferenceHelper
-import com.google.firebase.FirebaseApp
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 
