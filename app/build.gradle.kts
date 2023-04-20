@@ -1,4 +1,3 @@
-
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application)
@@ -6,7 +5,6 @@ plugins {
     alias(libs.plugins.cacheFixPlugin)
     alias(libs.plugins.ksp)
 //    alias(libs.plugins.android.dagger.hilt)
-    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -77,12 +75,11 @@ dependencies {
     implementation(libs.androidx.activity.activity)
     implementation(libs.androidx.activity.compose)
 
-    implementation(libs.compose.bom)
+    implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material.material)
-    implementation(libs.compose.material.iconsext)
-    implementation(libs.compose.material3)
+    implementation(libs.compose.material.material3)
     implementation(libs.compose.ui.test)
     implementation(libs.compose.ui.tooling)
     implementation(libs.compose.ui.test.manifest)
@@ -97,8 +94,7 @@ dependencies {
     // hilt
 
     implementation(libs.dagger.hilt.library)
-    kapt(libs.kotlininject.compiler)
-
+    ksp(libs.kotlininject.compiler)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.json)
     implementation(libs.retrofit.converter.scalars)
@@ -127,9 +123,12 @@ dependencies {
     implementation(libs.accompanist.coil)
 
     // firebase
-    implementation(platform("com.google.firebase:firebase-bom:31.0.2"))
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-crashlytics")
-    implementation("com.google.firebase:firebase-messaging")
-    implementation("com.google.firebase:firebase-dynamic-links")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.messaging)
+    implementation(libs.firebase.dynamic.links)
+
+    // utils
+    debugImplementation(libs.leakCanary)
 }
