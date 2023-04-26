@@ -92,9 +92,10 @@ dependencies {
 //    androidTestImplementation(libs.androidx.test.espresso)
 
     // hilt
-
     implementation(libs.dagger.hilt.library)
     ksp(libs.kotlininject.compiler)
+
+    // retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.json)
     implementation(libs.retrofit.converter.scalars)
@@ -104,7 +105,6 @@ dependencies {
     // chucker
     debugImplementation(libs.chucker)
     releaseImplementation(libs.chucker.release)
-
 
     // Timber
     implementation(libs.timber)

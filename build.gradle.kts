@@ -75,3 +75,6 @@ fun Project.configureAndroidProject() {
         "coreLibraryDesugaring"(libs.tools.desugarjdklibs)
     }
 }
+task<Delete>("clean") {
+    delete(rootProject.buildDir)
+}
