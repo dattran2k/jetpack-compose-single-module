@@ -1,9 +1,11 @@
+import com.android.build.gradle.internal.lint.AndroidLintTask
+import com.android.build.gradle.internal.lint.AndroidLintAnalysisTask
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.android.dagger.hilt.library) apply false
-    alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.gms.googleServices) apply false
@@ -42,6 +44,9 @@ fun Project.configureAndroidProject() {
         }
 
     }
+}
+task<Delete>("clean") {
+    delete(rootProject.buildDir)
 }
 task<Delete>("clean") {
     delete(rootProject.buildDir)

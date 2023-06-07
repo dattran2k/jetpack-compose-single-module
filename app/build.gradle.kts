@@ -1,4 +1,3 @@
-
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application)
@@ -6,7 +5,6 @@ plugins {
     alias(libs.plugins.cacheFixPlugin)
     alias(libs.plugins.ksp)
 //    alias(libs.plugins.android.dagger.hilt)
-    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -80,12 +78,11 @@ dependencies {
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.navigation.compose)
 
-    implementation(libs.compose.bom)
+    implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material.material)
-    implementation(libs.compose.material.iconsext)
-    implementation(libs.compose.material3)
+    implementation(libs.compose.material.material3)
     implementation(libs.compose.ui.test)
     implementation(libs.compose.ui.tooling)
     implementation(libs.compose.ui.test.manifest)
@@ -98,10 +95,10 @@ dependencies {
 //    androidTestImplementation(libs.androidx.test.espresso)
 
     // hilt
-
     implementation(libs.dagger.hilt.library)
-    kapt(libs.kotlininject.compiler)
+    ksp(libs.kotlininject.compiler)
 
+    // retrofit
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.json)
     implementation(libs.retrofit.converter.scalars)
@@ -111,7 +108,6 @@ dependencies {
     // chucker
     debugImplementation(libs.chucker)
     releaseImplementation(libs.chucker.release)
-
 
     // Timber
     implementation(libs.timber)
