@@ -18,6 +18,7 @@ data class MyColorPalette(
 
 val DarkTheme = MyColorPalette(BlackColor, WhiteColor)
 val LightTheme = MyColorPalette(WhiteColor, BlackColor)
+
 val LocalCustomColorTheme = compositionLocalOf {
     LightTheme
 }

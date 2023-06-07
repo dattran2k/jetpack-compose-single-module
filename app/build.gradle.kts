@@ -16,7 +16,6 @@ android {
         applicationId = "com.dat.base_compose"
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -25,7 +24,6 @@ android {
 
     buildTypes {
         debug {
-            versionNameSuffix = "-dev"
         }
         release {
             isMinifyEnabled = true
@@ -57,15 +55,18 @@ android {
     productFlavors {
         create("development") {
             dimension = "environment"
-            buildConfigField("String", "BASE_URL", "\"" + "https://example.com/" + "\"")
+            manifestPlaceholders["appLabel"] = "Base Debug"
             versionNameSuffix = "-development"
+
+            buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
+
         }
         create("production") {
             dimension = "environment"
-            buildConfigField("String", "BASE_URL", "\"" + "https://example.com/" + "\"")
+            manifestPlaceholders["appLabel"] = "Base"
             versionNameSuffix = "-production"
+            buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
-
     }
 }
 
@@ -76,6 +77,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.activity.activity)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.datastore)
+    implementation(libs.androidx.navigation.compose)
 
     implementation(libs.compose.bom)
     implementation(libs.compose.ui.ui)
@@ -126,10 +129,6 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.accompanist.coil)
 
-    // firebase
-    implementation(platform("com.google.firebase:firebase-bom:31.0.2"))
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-crashlytics")
-    implementation("com.google.firebase:firebase-messaging")
-    implementation("com.google.firebase:firebase-dynamic-links")
+    // debugImplementation because LeakCanary should only run in debug builds.
+    debugImplementation(libs.leakCanary)
 }

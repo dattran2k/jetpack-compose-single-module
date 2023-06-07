@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Base Jetpack Compose</string>
+    <string name="tab_home">First</string>
+    <string name="tab_trend">Second</string>
+    <string name="tab_discover">Third</string>
+    <string name="tab_notification">Fourth</string>
+    <string name="tab_user">Fifth</string>
 </resources>
