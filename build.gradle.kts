@@ -48,6 +48,3 @@ fun Project.configureAndroidProject() {
 task<Delete>("clean") {
     delete(rootProject.buildDir)
 }
-task<Delete>("clean") {
-    delete(rootProject.buildDir)
-}
