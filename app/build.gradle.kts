@@ -1,10 +1,14 @@
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.cacheFixPlugin)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.android.dagger.hilt.library)
 //    alias(libs.plugins.android.dagger.hilt)
+    kotlin("kapt")
 }
 
 android {
@@ -77,6 +81,11 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.datastore)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.core.splashscreen)
+
+    // hilt
+    implementation(libs.androidx.hilt.navigationcompose)
+    implementation(libs.androidx.hilt.work)
 
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui.ui)
@@ -96,7 +105,7 @@ dependencies {
 
     // hilt
     implementation(libs.dagger.hilt.library)
-    ksp(libs.kotlininject.compiler)
+    kapt(libs.dagger.hilt.compiler)
 
     // retrofit
     implementation(libs.retrofit)
@@ -127,4 +136,8 @@ dependencies {
 
     // debugImplementation because LeakCanary should only run in debug builds.
     debugImplementation(libs.leakCanary)
+}
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

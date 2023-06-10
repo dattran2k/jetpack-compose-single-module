@@ -20,8 +20,7 @@ sealed class MainItem(
     object Home : MainItem(R.drawable.ic_tab_home, R.string.tab_home, MainTab.Home)
     object Trend : MainItem(R.drawable.ic_tab_trend, R.string.tab_trend, MainTab.Trend)
     object Discover : MainItem(R.drawable.ic_tab_discover, R.string.tab_discover, MainTab.Discover)
-    object Notification :
-        MainItem(R.drawable.ic_tab_notification, R.string.tab_notification, MainTab.Notification)
+    object Notification : MainItem(R.drawable.ic_tab_notification, R.string.tab_notification, MainTab.Notification)
 
     object User : MainItem(R.drawable.ic_tab_user, R.string.tab_user, MainTab.User)
 }

@@ -6,20 +6,35 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import com.dat.base_compose.data.model.local.DarkThemeConfig
+import com.dat.base_compose.presenstation.MainActivityUiState
 
-object ThemeState {
-    var isDark by mutableStateOf(false)
+@Composable
+fun shouldUseDarkTheme(
+    uiState: MainActivityUiState,
+): Boolean = when (uiState) {
+    MainActivityUiState.Loading -> isSystemInDarkTheme()
+    is MainActivityUiState.Success -> when (uiState.userData.darkThemeConfig) {
+        DarkThemeConfig.FOLLOW_SYSTEM -> isSystemInDarkTheme()
+        DarkThemeConfig.LIGHT -> false
+        DarkThemeConfig.DARK -> true
+    }
 }
 
 data class MyColorPalette(
-    val HomeBackGround: Color,
-    val homeTextTitle : Color
+    val backGround: Color,
+    val textTitle: Color
 )
 
-val DarkTheme = MyColorPalette(BlackColor, WhiteColor)
-val LightTheme = MyColorPalette(WhiteColor, BlackColor)
+val DarkTheme = MyColorPalette(
+    backGround = BlackColor,
+    textTitle = WhiteColor)
 
-val LocalCustomColorTheme = compositionLocalOf {
+val LightTheme = MyColorPalette(
+    backGround = WhiteColor,
+    textTitle = BlackColor)
+
+val CustomColorTheme = compositionLocalOf {
     LightTheme
 }
 private val DarkColorPalette = darkColors(
@@ -36,7 +51,10 @@ private val LightColorPalette = lightColors(
 
 
 @Composable
-fun BaseJetpackComposeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun BaseJetpackComposeTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
@@ -47,7 +65,7 @@ fun BaseJetpackComposeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content:
     } else {
         LightTheme
     }
-    CompositionLocalProvider(LocalCustomColorTheme provides colorsCustom) {
+    CompositionLocalProvider(CustomColorTheme provides colorsCustom) {
         MaterialTheme(
             colors = colors,
             typography = Typography,

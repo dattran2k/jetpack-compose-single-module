@@ -22,11 +22,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.dat.base_compose.presenstation.navigation.MainItem
 import com.dat.base_compose.presenstation.navigation.MainTab
-import com.dat.base_compose.presenstation.navigation.Screen
-import com.dat.base_compose.presenstation.theme.BlackColor
-import com.dat.base_compose.presenstation.theme.LocalCustomColorTheme
+import com.dat.base_compose.presenstation.theme.CustomColorTheme
 import com.dat.base_compose.presenstation.theme.PrimaryColor
 import com.dat.base_compose.presenstation.view.main.home.HomeScreen
+import com.dat.base_compose.presenstation.view.user.UserScreenRoute
 
 @Composable
 fun MainScreen(mainNavController: NavController) {
@@ -69,8 +68,8 @@ fun MainScreen(mainNavController: NavController) {
                             }
                         },
                         selectedContentColor = PrimaryColor,
-                        unselectedContentColor = LocalCustomColorTheme.current.homeTextTitle,
-                        modifier = Modifier.background(LocalCustomColorTheme.current.HomeBackGround)
+                        unselectedContentColor = CustomColorTheme.current.textTitle,
+                        modifier = Modifier.background(CustomColorTheme.current.backGround)
                     )
 
                 }
@@ -83,10 +82,10 @@ fun MainScreen(mainNavController: NavController) {
             Modifier.padding(innerPadding)
         ) {
             composable(MainTab.Home.route) { HomeScreen() }
-            composable(MainTab.Trend.route) { HomeScreen() }
-            composable(MainTab.Discover.route) { HomeScreen() }
-            composable(MainTab.Notification.route) { HomeScreen() }
-            composable(MainTab.User.route) { HomeScreen() }
+            composable(MainTab.Trend.route) { UserScreenRoute() }
+            composable(MainTab.Discover.route) { UserScreenRoute() }
+            composable(MainTab.Notification.route) { UserScreenRoute() }
+            composable(MainTab.User.route) { UserScreenRoute() }
         }
     }
 

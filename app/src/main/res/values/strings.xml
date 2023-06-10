@@ -5,4 +5,6 @@
     <string name="tab_discover">Third</string>
     <string name="tab_notification">Fourth</string>
     <string name="tab_user">Fifth</string>
+    <string name="loading">Loading</string>
+
 </resources>

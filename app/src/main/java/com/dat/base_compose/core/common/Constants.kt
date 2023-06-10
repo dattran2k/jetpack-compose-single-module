@@ -10,7 +10,7 @@ object Constants {
 }
 
 object DataStorePref {
-    val PREF_DARK_MODE = intPreferencesKey("PREF_DARK_MODE")
+
 
     const val DARK_MODE_UN_ENABLE = 0
     const val DARK_MODE_ENABLE = 1
