@@ -1,5 +1,7 @@
 package com.dat.base_compose.presenstation.view.main
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
@@ -12,37 +14,48 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.dat.base_compose.presenstation.navigation.MainItem
-import com.dat.base_compose.presenstation.navigation.MainTab
+import com.dat.base_compose.R
+import com.dat.base_compose.presenstation.navigation.Screen
+import com.dat.base_compose.presenstation.navigation.buildScreen
 import com.dat.base_compose.presenstation.theme.CustomColorTheme
 import com.dat.base_compose.presenstation.theme.PrimaryColor
 import com.dat.base_compose.presenstation.view.main.home.HomeScreen
-import com.dat.base_compose.presenstation.view.user.UserScreenRoute
+import com.dat.base_compose.presenstation.view.main.user.UserRoute
+
+class MainItem(
+    @DrawableRes val icon: Int,
+    @StringRes val title: Int,
+    val screen: Screen
+)
+
+val tabItems = listOf(
+    MainItem(R.drawable.ic_tab_home, R.string.tab_home, Screen.Home),
+    MainItem(R.drawable.ic_tab_trend, R.string.tab_trend, Screen.Trend),
+    MainItem(R.drawable.ic_tab_discover, R.string.tab_discover, Screen.Discover),
+    MainItem(R.drawable.ic_tab_notification, R.string.tab_notification, Screen.Notification),
+    MainItem(R.drawable.ic_tab_user, R.string.tab_user, Screen.User)
+)
 
 @Composable
-fun MainScreen(mainNavController: NavController) {
+fun MainRoute(onNavigateDetail: () -> Unit) {
     val navController = rememberNavController()
-    val items = listOf(
-        MainItem.Home,
-        MainItem.Trend,
-        MainItem.Discover,
-        MainItem.Notification,
-        MainItem.User
-    )
+    MainScreen(navController, onNavigateDetail)
+}
+
+@Composable
+fun MainScreen(navController: NavHostController, onNavigateDetail: () -> Unit) {
     Scaffold(
         bottomBar = {
             BottomNavigation {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentDestination = navBackStackEntry?.destination
-                items.forEach { screen ->
+                tabItems.forEach { screen ->
                     BottomNavigationItem(
                         icon = {
                             Icon(
@@ -78,20 +91,17 @@ fun MainScreen(mainNavController: NavController) {
     ) { innerPadding ->
         NavHost(
             navController,
-            startDestination = MainTab.Home.route,
+            startDestination = Screen.Home.route,
             Modifier.padding(innerPadding)
         ) {
-            composable(MainTab.Home.route) { HomeScreen() }
-            composable(MainTab.Trend.route) { UserScreenRoute() }
-            composable(MainTab.Discover.route) { UserScreenRoute() }
-            composable(MainTab.Notification.route) { UserScreenRoute() }
-            composable(MainTab.User.route) { UserScreenRoute() }
+            tabItems.forEachIndexed { index, mainItem ->
+                buildScreen(mainItem.screen) {
+                    when (index) {
+                        0 -> HomeScreen(onNavigateDetail)
+                        else -> UserRoute()
+                    }
+                }
+            }
         }
     }
-
 }
-
-private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: MainItem) =
-    this?.hierarchy?.any {
-        it.route?.contains(destination.screen.route, true) ?: false
-    } ?: false

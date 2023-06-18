@@ -1,4 +1,4 @@
-package com.dat.base_compose.presenstation.view.user
+package com.dat.base_compose.presenstation.view.main.user
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -14,7 +14,6 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.RadioButtonColors
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,7 +34,7 @@ import com.dat.base_compose.presenstation.theme.PrimaryColor
 
 
 @Composable
-fun UserScreenRoute(viewModel: UserViewModel = hiltViewModel()) {
+internal fun UserRoute(viewModel: UserViewModel = hiltViewModel()) {
     val darkModeState by viewModel.userUIState.collectAsStateWithLifecycle()
     UserScreen(darkModeState, viewModel::updateDarkMode)
 }

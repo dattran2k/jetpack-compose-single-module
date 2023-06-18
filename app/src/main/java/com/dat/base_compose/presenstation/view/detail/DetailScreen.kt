@@ -1,4 +1,4 @@
-package com.dat.base_compose.presenstation.view.main.home
+package com.dat.base_compose.presenstation.view.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,25 +9,25 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.dat.base_compose.presenstation.theme.CustomColorTheme
 
+@Composable
+internal fun DetailRoute(onClickNavigate: () -> Unit) {
+    DetailScreen(onClickNavigate)
+}
 
 @Composable
-fun HomeScreen(
-    onNavigateDetail: () -> Unit,
-    viewModel: HomeViewModel = hiltViewModel(),
-) {
+fun DetailScreen(onClickNavigate: () -> Unit) {
     Column(
         Modifier
             .fillMaxSize()
             .background(CustomColorTheme.current.backGround),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
-    ) {
-        Text(text = "Home Screen", color = CustomColorTheme.current.textTitle)
-        Button(onClick = onNavigateDetail) {
+    )
+    {
+        Text(text = "Detail Screen", color = CustomColorTheme.current.textTitle)
+        Button(onClick = onClickNavigate) {
             Text(text = "Click here to navigate")
         }
     }
