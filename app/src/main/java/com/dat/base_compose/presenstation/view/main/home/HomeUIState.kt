@@ -1,10 +1,12 @@
 package com.dat.base_compose.presenstation.view.main.home
 
+import androidx.compose.runtime.Immutable
 import com.dat.base_compose.data.model.TodoItem
 
-
-sealed interface HomeUIState {
-    class Success(val data: List<TodoItem>) : HomeUIState
-    class Error(val msg: String?) : HomeUIState
-    object Loading : HomeUIState
-}
+@Immutable
+data class HomeUIState(
+    val listTodoItem: List<TodoItem> = listOf(),
+    val isLoading: Boolean = false,
+    val message: String? = null,
+    val endReached : Boolean = false
+)

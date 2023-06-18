@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.dat.base_compose.data.model.TodoItem
 import com.dat.base_compose.presenstation.navigation.ScreenRoute
 
 const val DETAIL_NAME = "Detail"
@@ -20,8 +21,8 @@ object Detail : ScreenRoute("${DETAIL_NAME}/{$DETAIL_ARG_ID}/{$DETAIL_ARG_TITLE}
 
 }
 
-fun NavController.navigateDetail(detailScreenArg: Detail.DetailScreenArg) {
-    this.navigate("$DETAIL_NAME/${detailScreenArg.id}/${detailScreenArg.title}")
+fun NavController.navigateDetail(todoItem: TodoItem) {
+    this.navigate("$DETAIL_NAME/${todoItem.id}/${todoItem.title}")
 }
 
 fun NavGraphBuilder.detailScreen(

@@ -9,7 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.dat.base_compose.presenstation.theme.CustomColorTheme
+import com.dat.base_compose.presenstation.theme.LocalCustomColorTheme
 
 @Composable
 internal fun DetailRoute(onClickNavigate: () -> Unit, detailScreenArg: Detail.DetailScreenArg) {
@@ -21,14 +21,14 @@ fun DetailScreen(onClickNavigate: () -> Unit, detailScreenArg: Detail.DetailScre
     Column(
         Modifier
             .fillMaxSize()
-            .background(CustomColorTheme.current.backGround),
+            .background(LocalCustomColorTheme.current.backGround),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly
     )
     {
         Text(
             text = "Detail Screen, arg1 = ${detailScreenArg.id}, arg2 = ${detailScreenArg.title}",
-            color = CustomColorTheme.current.textTitle
+            color = LocalCustomColorTheme.current.textTitle
         )
         Button(onClick = onClickNavigate) {
             Text(text = "Click here to navigate")

@@ -30,7 +30,7 @@ import com.dat.base_compose.R
 import com.dat.base_compose.data.model.local.DarkThemeConfig
 import com.dat.base_compose.presenstation.navigation.ScreenRoute
 import com.dat.base_compose.presenstation.theme.BaseJetpackComposeTheme
-import com.dat.base_compose.presenstation.theme.CustomColorTheme
+import com.dat.base_compose.presenstation.theme.LocalCustomColorTheme
 import com.dat.base_compose.presenstation.theme.PrimaryColor
 
 object UserScreenRoute : ScreenRoute("User")
@@ -50,7 +50,7 @@ fun UserScreen(
             .verticalScroll(rememberScrollState())
             .statusBarsPadding()
             .background(
-                CustomColorTheme.current.backGround
+                LocalCustomColorTheme.current.backGround
             )
     ) {
         when (userUIState) {
@@ -114,11 +114,11 @@ fun SettingsDialogThemeChooserRow(
             onClick = null,
             colors = RadioButtonDefaults.colors(
                 selectedColor = PrimaryColor,
-                unselectedColor =  CustomColorTheme.current.textTitle
+                unselectedColor =  LocalCustomColorTheme.current.textTitle
             ),
         )
         Spacer(Modifier.width(8.dp))
-        Text(text, color = CustomColorTheme.current.textTitle)
+        Text(text, color = LocalCustomColorTheme.current.textTitle)
     }
 }
 

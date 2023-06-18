@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
+import com.dat.base_compose.data.model.TodoItem
 import com.dat.base_compose.presenstation.navigation.ScreenRoute
 import com.dat.base_compose.presenstation.view.detail.Detail
 
@@ -16,7 +17,7 @@ fun NavController.navigateMain() {
 }
 
 fun NavGraphBuilder.mainScreen(
-    onNavigateDetail: (arg : Detail.DetailScreenArg) -> Unit
+    onNavigateDetail: (todo : TodoItem) -> Unit
 ) {
     composable(
         route = MainScreenRoute.route,

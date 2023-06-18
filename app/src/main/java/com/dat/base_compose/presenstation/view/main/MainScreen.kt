@@ -22,14 +22,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.dat.base_compose.R
+import com.dat.base_compose.data.model.TodoItem
 import com.dat.base_compose.presenstation.navigation.ScreenRoute
-import com.dat.base_compose.presenstation.theme.CustomColorTheme
+import com.dat.base_compose.presenstation.theme.LocalCustomColorTheme
 import com.dat.base_compose.presenstation.theme.PrimaryColor
-import com.dat.base_compose.presenstation.view.detail.Detail
-import com.dat.base_compose.presenstation.view.main.home.HomeScreen
+import com.dat.base_compose.presenstation.view.main.home.HomeRoute
 import com.dat.base_compose.presenstation.view.main.home.HomeScreenRote
 import com.dat.base_compose.presenstation.view.main.user.UserRoute
 import com.dat.base_compose.presenstation.view.main.user.UserScreenRoute
+
 object TrendScreenRoute : ScreenRoute("Trend")
 object DiscoverScreenRoute : ScreenRoute("Discover")
 object NotificationScreenRoute : ScreenRoute("Notification")
@@ -48,14 +49,18 @@ val tabItems = listOf(
 )
 
 @Composable
-fun MainRoute(onNavigateDetail: (arg : Detail.DetailScreenArg) -> Unit) {
+fun MainRoute(onNavigateDetail: (todo : TodoItem)-> Unit) {
     val navController = rememberNavController()
     MainScreen(navController, onNavigateDetail)
 }
 
 @Composable
-fun MainScreen(navController: NavHostController, onNavigateDetail: (arg : Detail.DetailScreenArg) -> Unit) {
+fun MainScreen(
+    navController: NavHostController,
+    onNavigateDetail: (todo : TodoItem) -> Unit
+) {
     Scaffold(
+        backgroundColor = LocalCustomColorTheme.current.backGround,
         bottomBar = {
             BottomNavigation {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -86,8 +91,8 @@ fun MainScreen(navController: NavHostController, onNavigateDetail: (arg : Detail
                             }
                         },
                         selectedContentColor = PrimaryColor,
-                        unselectedContentColor = CustomColorTheme.current.textTitle,
-                        modifier = Modifier.background(CustomColorTheme.current.backGround)
+                        unselectedContentColor = LocalCustomColorTheme.current.textTitle,
+                        modifier = Modifier.background(LocalCustomColorTheme.current.backGround)
                     )
 
                 }
@@ -104,12 +109,11 @@ fun MainScreen(navController: NavHostController, onNavigateDetail: (arg : Detail
                     route = mainItem.screenRoute.route
                 ) {
                     when (index) {
-                        0 -> HomeScreen(onNavigateDetail)
-                        1 -> HomeScreen(onNavigateDetail)
+                        0 -> HomeRoute(onNavigateDetail)
+                        1 -> HomeRoute(onNavigateDetail)
                         else -> UserRoute()
                     }
                 }
-
             }
         }
     }

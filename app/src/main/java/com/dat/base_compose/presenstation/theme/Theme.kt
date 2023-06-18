@@ -23,18 +23,24 @@ fun shouldUseDarkTheme(
 
 data class MyColorPalette(
     val backGround: Color,
-    val textTitle: Color
+    val textTitle: Color,
+    val todoItemBackGround: Color
 )
 
-val DarkTheme = MyColorPalette(
-    backGround = BlackColor,
-    textTitle = WhiteColor)
+
 
 val LightTheme = MyColorPalette(
     backGround = WhiteColor,
-    textTitle = BlackColor)
+    textTitle = BlackColor,
+    todoItemBackGround = LineColor
+)
+val DarkTheme = MyColorPalette(
+    backGround = BlackColor,
+    textTitle = WhiteColor,
+    todoItemBackGround = WhiteColorAlpha10
+)
 
-val CustomColorTheme = compositionLocalOf {
+val LocalCustomColorTheme = compositionLocalOf {
     LightTheme
 }
 private val DarkColorPalette = darkColors(
@@ -65,7 +71,7 @@ fun BaseJetpackComposeTheme(
     } else {
         LightTheme
     }
-    CompositionLocalProvider(CustomColorTheme provides colorsCustom) {
+    CompositionLocalProvider(LocalCustomColorTheme provides colorsCustom) {
         MaterialTheme(
             colors = colors,
             typography = Typography,
