@@ -11,12 +11,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.dat.base_compose.presenstation.navigation.ScreenRoute
 import com.dat.base_compose.presenstation.theme.CustomColorTheme
+import com.dat.base_compose.presenstation.view.detail.Detail
 
-
+object HomeScreenRote : ScreenRoute("Home")
 @Composable
 fun HomeScreen(
-    onNavigateDetail: () -> Unit,
+    onNavigateDetail: (arg: Detail.DetailScreenArg) -> Unit,
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     Column(
@@ -27,7 +29,9 @@ fun HomeScreen(
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
         Text(text = "Home Screen", color = CustomColorTheme.current.textTitle)
-        Button(onClick = onNavigateDetail) {
+        Button(onClick = {
+            onNavigateDetail.invoke(Detail.DetailScreenArg(12, "34"))
+        }) {
             Text(text = "Click here to navigate")
         }
     }

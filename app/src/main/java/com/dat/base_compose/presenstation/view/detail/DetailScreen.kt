@@ -12,12 +12,12 @@ import androidx.compose.ui.Modifier
 import com.dat.base_compose.presenstation.theme.CustomColorTheme
 
 @Composable
-internal fun DetailRoute(onClickNavigate: () -> Unit) {
-    DetailScreen(onClickNavigate)
+internal fun DetailRoute(onClickNavigate: () -> Unit, detailScreenArg: Detail.DetailScreenArg) {
+    DetailScreen(onClickNavigate, detailScreenArg)
 }
 
 @Composable
-fun DetailScreen(onClickNavigate: () -> Unit) {
+fun DetailScreen(onClickNavigate: () -> Unit, detailScreenArg: Detail.DetailScreenArg) {
     Column(
         Modifier
             .fillMaxSize()
@@ -26,7 +26,10 @@ fun DetailScreen(onClickNavigate: () -> Unit) {
         verticalArrangement = Arrangement.SpaceEvenly
     )
     {
-        Text(text = "Detail Screen", color = CustomColorTheme.current.textTitle)
+        Text(
+            text = "Detail Screen, arg1 = ${detailScreenArg.id}, arg2 = ${detailScreenArg.title}",
+            color = CustomColorTheme.current.textTitle
+        )
         Button(onClick = onClickNavigate) {
             Text(text = "Click here to navigate")
         }

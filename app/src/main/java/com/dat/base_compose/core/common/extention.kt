@@ -1,9 +1,6 @@
 package com.dat.base_compose.core.common
 
 import android.view.View
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
-import com.dat.base_compose.presenstation.navigation.Screen
 import com.google.gson.Gson
 
 fun View?.show() {

@@ -18,38 +18,43 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.dat.base_compose.R
-import com.dat.base_compose.presenstation.navigation.Screen
-import com.dat.base_compose.presenstation.navigation.buildScreen
+import com.dat.base_compose.presenstation.navigation.ScreenRoute
 import com.dat.base_compose.presenstation.theme.CustomColorTheme
 import com.dat.base_compose.presenstation.theme.PrimaryColor
+import com.dat.base_compose.presenstation.view.detail.Detail
 import com.dat.base_compose.presenstation.view.main.home.HomeScreen
+import com.dat.base_compose.presenstation.view.main.home.HomeScreenRote
 import com.dat.base_compose.presenstation.view.main.user.UserRoute
-
+import com.dat.base_compose.presenstation.view.main.user.UserScreenRoute
+object TrendScreenRoute : ScreenRoute("Trend")
+object DiscoverScreenRoute : ScreenRoute("Discover")
+object NotificationScreenRoute : ScreenRoute("Notification")
 class MainItem(
     @DrawableRes val icon: Int,
     @StringRes val title: Int,
-    val screen: Screen
+    val screenRoute: ScreenRoute
 )
 
 val tabItems = listOf(
-    MainItem(R.drawable.ic_tab_home, R.string.tab_home, Screen.Home),
-    MainItem(R.drawable.ic_tab_trend, R.string.tab_trend, Screen.Trend),
-    MainItem(R.drawable.ic_tab_discover, R.string.tab_discover, Screen.Discover),
-    MainItem(R.drawable.ic_tab_notification, R.string.tab_notification, Screen.Notification),
-    MainItem(R.drawable.ic_tab_user, R.string.tab_user, Screen.User)
+    MainItem(R.drawable.ic_tab_home, R.string.tab_home, HomeScreenRote),
+    MainItem(R.drawable.ic_tab_trend, R.string.tab_trend, TrendScreenRoute),
+    MainItem(R.drawable.ic_tab_discover, R.string.tab_discover, DiscoverScreenRoute),
+    MainItem(R.drawable.ic_tab_notification, R.string.tab_notification, NotificationScreenRoute),
+    MainItem(R.drawable.ic_tab_user, R.string.tab_user, UserScreenRoute)
 )
 
 @Composable
-fun MainRoute(onNavigateDetail: () -> Unit) {
+fun MainRoute(onNavigateDetail: (arg : Detail.DetailScreenArg) -> Unit) {
     val navController = rememberNavController()
     MainScreen(navController, onNavigateDetail)
 }
 
 @Composable
-fun MainScreen(navController: NavHostController, onNavigateDetail: () -> Unit) {
+fun MainScreen(navController: NavHostController, onNavigateDetail: (arg : Detail.DetailScreenArg) -> Unit) {
     Scaffold(
         bottomBar = {
             BottomNavigation {
@@ -64,9 +69,9 @@ fun MainScreen(navController: NavHostController, onNavigateDetail: () -> Unit) {
                             )
                         },
                         label = { Text(stringResource(screen.title)) },
-                        selected = currentDestination?.hierarchy?.any { it.route == screen.screen.route } == true,
+                        selected = currentDestination?.hierarchy?.any { it.route == screen.screenRoute.route } == true,
                         onClick = {
-                            navController.navigate(screen.screen.route) {
+                            navController.navigate(screen.screenRoute.route) {
                                 // Pop up to the start destination of the graph to
                                 // avoid building up a large stack of destinations
                                 // on the back stack as users select items
@@ -91,16 +96,20 @@ fun MainScreen(navController: NavHostController, onNavigateDetail: () -> Unit) {
     ) { innerPadding ->
         NavHost(
             navController,
-            startDestination = Screen.Home.route,
+            startDestination = HomeScreenRote.route,
             Modifier.padding(innerPadding)
         ) {
             tabItems.forEachIndexed { index, mainItem ->
-                buildScreen(mainItem.screen) {
+                composable(
+                    route = mainItem.screenRoute.route
+                ) {
                     when (index) {
                         0 -> HomeScreen(onNavigateDetail)
+                        1 -> HomeScreen(onNavigateDetail)
                         else -> UserRoute()
                     }
                 }
+
             }
         }
     }

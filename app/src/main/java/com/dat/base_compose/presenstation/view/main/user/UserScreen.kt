@@ -28,11 +28,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dat.base_compose.R
 import com.dat.base_compose.data.model.local.DarkThemeConfig
+import com.dat.base_compose.presenstation.navigation.ScreenRoute
 import com.dat.base_compose.presenstation.theme.BaseJetpackComposeTheme
 import com.dat.base_compose.presenstation.theme.CustomColorTheme
 import com.dat.base_compose.presenstation.theme.PrimaryColor
 
-
+object UserScreenRoute : ScreenRoute("User")
 @Composable
 internal fun UserRoute(viewModel: UserViewModel = hiltViewModel()) {
     val darkModeState by viewModel.userUIState.collectAsStateWithLifecycle()
