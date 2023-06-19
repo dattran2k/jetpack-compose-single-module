@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.dat.base_compose.presenstation.view.main.home
 
 
@@ -19,6 +21,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.PullRefreshState
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.runtime.Composable
@@ -39,32 +42,33 @@ import com.dat.base_compose.presenstation.theme.LocalCustomColorTheme
 
 object HomeScreenRote : ScreenRoute("Home")
 
-@OptIn(ExperimentalMaterialApi::class)
+
 @Composable
 fun HomeRoute(
-    onNavigateDetail: (todo: TodoItem) -> Unit, viewModel: HomeViewModel = hiltViewModel()
+    onNavigateDetail: (todo: TodoItem) -> Unit, viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val homeUIState by viewModel.homeUiState.collectAsStateWithLifecycle()
-
-    HomeScreen(homeUIState, onNavigateDetail, viewModel::loadData)
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun HomeScreen(
-    homeUIState: HomeUIState,
-    onNavigateDetail: (todo: TodoItem) -> Unit,
-    getNewData: (isReset : Boolean) -> Unit
-) {
+    val currentPage by viewModel.curPage.collectAsStateWithLifecycle()
     var refreshing by remember {
         mutableStateOf(false)
     }
-
     val pullRefreshState = rememberPullRefreshState(refreshing, {
         refreshing = false
-        getNewData.invoke(true)
+        viewModel.refreshData()
     })
+    HomeScreen(homeUIState, refreshing,currentPage, pullRefreshState, onNavigateDetail, viewModel::getTodos)
+}
 
+
+@Composable
+fun HomeScreen(
+    homeUIState: HomeUIState,
+    refreshing: Boolean = false,
+    currentPage: Int = 1,
+    pullRefreshState: PullRefreshState = getDefaultPullRefreshState(),
+    onNavigateDetail: (todo: TodoItem) -> Unit = {},
+    getNewData: () -> Unit = {},
+) {
     Box(
         Modifier
             .fillMaxSize()
@@ -76,7 +80,7 @@ fun HomeScreen(
             items(itemCount) {
                 val item = listTodo[it]
                 if (it >= itemCount - 1 && !homeUIState.endReached && !homeUIState.isLoading) {
-                    getNewData(false)
+                    getNewData()
                 }
                 ItemTodo(item, Modifier.clickable {
                     onNavigateDetail.invoke(item)
@@ -91,7 +95,7 @@ fun HomeScreen(
                     )
             }
         }
-        if (homeUIState.isLoading && homeUIState.listTodoItem.isEmpty())
+        if (homeUIState.isLoading && currentPage == 1)
             CircularProgressIndicator(
                 modifier = Modifier
                     .fillMaxSize()
@@ -164,7 +168,7 @@ private fun ListPreview() {
             null,
             false,
         )
-        HomeScreen(homeUIState, {}, {})
+        HomeScreen(homeUIState)
     }
 }
 
@@ -179,6 +183,14 @@ private fun PreviewEmpty() {
             null,
             false,
         )
-        HomeScreen(homeUIState, {}, {})
+        HomeScreen(homeUIState)
     }
+}
+
+
+@Composable
+fun getDefaultPullRefreshState(isRefresh: Boolean = false): PullRefreshState {
+    return rememberPullRefreshState(refreshing = isRefresh, onRefresh = {
+
+    })
 }
