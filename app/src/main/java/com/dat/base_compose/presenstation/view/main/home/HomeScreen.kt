@@ -148,7 +148,7 @@ private fun ItemTodoPreview() {
 @Preview
 @Composable
 private fun ListPreview() {
-    BaseJetpackComposeTheme(true) {
+    BaseJetpackComposeTheme {
         val homeUIState = HomeUIState(
             listOf(
                 TodoItem(

@@ -15,7 +15,7 @@ class TodoRepositoryIml @Inject constructor(
     private val apiDataSource: ApiDataSource,
     @Dispatcher(MyDispatchers.IO) private val dispatcher: CoroutineDispatcher,
 ) : TodoRepository {
-    override fun getDataWithFlow(): Flow<Resource<List<TodoItem>>> {
+    override fun getTodos(): Flow<Resource<List<TodoItem>>> {
         return flowSafeApiCall(dispatcher) {
             apiDataSource.getTodos()
         }

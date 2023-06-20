@@ -15,9 +15,9 @@ import retrofit2.Response
  * This is used for getting states of network call
  */
 sealed interface Resource<in T : Any> {
-    class Success<T : Any>(val data: T) : Resource<T>
+    data class Success<T : Any>(val data: T) : Resource<T>
     object Loading : Resource<Any>
-    class Error<T : Any>(val message: String, val code: Int, val data: T? = null) : Resource<T>
+    data class Error<T : Any>(val message: String, val code: Int = -1, val data: T? = null) : Resource<T>
 }
 
 suspend fun <T : Any> safeApiCall(

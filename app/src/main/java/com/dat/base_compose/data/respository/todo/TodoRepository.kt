@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 
 interface TodoRepository {
-    fun getDataWithFlow(): Flow<Resource<List<TodoItem>>>
+    fun getTodos(): Flow<Resource<List<TodoItem>>>
 }

@@ -100,7 +100,7 @@ dependencies {
     implementation(libs.compose.ui.test.manifest)
 
     // testing
-
+    testImplementation("org.mockito:mockito-core:3.12.4")
 //    testImplementation(libs.junit)
 //    androidTestImplementation(libs.androidx.test.junit)
 //    androidTestImplementation(libs.androidx)

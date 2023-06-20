@@ -30,10 +30,6 @@ import com.dat.base_compose.presenstation.view.main.home.HomeRoute
 import com.dat.base_compose.presenstation.view.main.home.HomeScreenRote
 import com.dat.base_compose.presenstation.view.main.user.UserRoute
 import com.dat.base_compose.presenstation.view.main.user.UserScreenRoute
-
-object TrendScreenRoute : ScreenRoute("Trend")
-object DiscoverScreenRoute : ScreenRoute("Discover")
-object NotificationScreenRoute : ScreenRoute("Notification")
 class MainItem(
     @DrawableRes val icon: Int,
     @StringRes val title: Int,
@@ -42,9 +38,6 @@ class MainItem(
 
 val tabItems = listOf(
     MainItem(R.drawable.ic_tab_home, R.string.tab_home, HomeScreenRote),
-    MainItem(R.drawable.ic_tab_trend, R.string.tab_trend, TrendScreenRoute),
-    MainItem(R.drawable.ic_tab_discover, R.string.tab_discover, DiscoverScreenRoute),
-    MainItem(R.drawable.ic_tab_notification, R.string.tab_notification, NotificationScreenRoute),
     MainItem(R.drawable.ic_tab_user, R.string.tab_user, UserScreenRoute)
 )
 
@@ -110,8 +103,7 @@ fun MainScreen(
                 ) {
                     when (index) {
                         0 -> HomeRoute(onNavigateDetail)
-                        1 -> HomeRoute(onNavigateDetail)
-                        else -> UserRoute()
+                        1 -> UserRoute()
                     }
                 }
             }

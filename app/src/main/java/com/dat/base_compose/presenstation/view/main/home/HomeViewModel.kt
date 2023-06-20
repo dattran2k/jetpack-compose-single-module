@@ -20,7 +20,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val todoRepository: TodoRepository) :
     ViewModel() {
 
-    private var todoList = MutableStateFlow<List<TodoItem>>(listOf())
+    var todoList = MutableStateFlow<List<TodoItem>>(listOf())
     var isLoading = MutableStateFlow(false)
     var endReached = MutableStateFlow(false)
     var errorMessage = MutableStateFlow("")
@@ -50,9 +50,10 @@ class HomeViewModel @Inject constructor(private val todoRepository: TodoReposito
 
     fun getTodos() {
         viewModelScope.launch {
-            todoRepository.getDataWithFlow().collect {
+            todoRepository.getTodos().collect {
                 when (it) {
                     is Resource.Error -> {
+                        isLoading.emit(false)
                         errorMessage.emit(it.message)
                     }
 
@@ -61,8 +62,6 @@ class HomeViewModel @Inject constructor(private val todoRepository: TodoReposito
                     }
 
                     is Resource.Success -> {
-                        // delay for demo load
-                        delay(2000)
                         isLoading.emit(false)
                         if (curPage.value == 1)
                             todoList.value = it.data
