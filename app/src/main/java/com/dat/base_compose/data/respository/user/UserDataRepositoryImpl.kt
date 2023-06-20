@@ -1,6 +1,7 @@
 package com.dat.base_compose.data.respository.user
 
-import com.dat.base_compose.data.local.PreferenceDataSource
+
+import com.dat.base_compose.core.datastore.PreferenceDataSource
 import com.dat.base_compose.data.model.local.DarkThemeConfig
 import com.dat.base_compose.data.model.local.UserData
 import kotlinx.coroutines.flow.Flow
@@ -12,6 +13,6 @@ class UserDataRepositoryImpl @Inject constructor(private val preferenceDataSourc
     override val userData: Flow<UserData> = preferenceDataSource.userData
 
     override suspend fun updateDarkMode(darkThemeConfig: DarkThemeConfig) {
-        preferenceDataSource.updateDarkTheme(darkThemeConfig)
+        preferenceDataSource.updateDarkMode(darkThemeConfig)
     }
 }

@@ -71,21 +71,21 @@ fun UserScreen(
 @Composable
 fun SettingsPanel(
     darkMode: DarkThemeConfig,
-    onChangeDarkThemeConfig: (darkThemeConfig: DarkThemeConfig) -> Unit,
+    onChangeDarkThemeConfig: (darkThemeConfig: DarkThemeConfig) -> Unit = {},
 ) {
     Column(Modifier.selectableGroup()) {
         SettingsDialogThemeChooserRow(
-            text = DarkThemeConfig.FOLLOW_SYSTEM.configName,
+            text = "Follow system",
             selected = darkMode == DarkThemeConfig.FOLLOW_SYSTEM,
             onClick = { onChangeDarkThemeConfig(DarkThemeConfig.FOLLOW_SYSTEM) },
         )
         SettingsDialogThemeChooserRow(
-            text = DarkThemeConfig.LIGHT.configName,
+            text = "Light",
             selected = darkMode == DarkThemeConfig.LIGHT,
             onClick = { onChangeDarkThemeConfig(DarkThemeConfig.LIGHT) },
         )
         SettingsDialogThemeChooserRow(
-            text = DarkThemeConfig.DARK.configName,
+            text = "Dark",
             selected = darkMode == DarkThemeConfig.DARK,
             onClick = { onChangeDarkThemeConfig(DarkThemeConfig.DARK) },
         )
@@ -129,7 +129,6 @@ private fun PreviewUser() {
         UserScreen(userUIState = UserUIState.Success(
             DarkThemeConfig.LIGHT
         ), onChangeDarkThemeConfig = {
-
         })
     }
 }

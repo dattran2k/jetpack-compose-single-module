@@ -18,6 +18,8 @@ composecompiler = "1.4.5"
 okhttp = "5.0.0-alpha.7"
 retrofit = "2.9.0"
 dagger_hilt = "2.45"
+protobuf = "3.23.0"
+protobufPlugin = "0.9.3"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -32,6 +34,7 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:1.8.20-1.0.10"
 gms-googleServices = "com.google.gms.google-services:4.3.15"
 firebase-crashlytics = "com.google.firebase.crashlytics:2.9.5"
+protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin" }
 
 [libraries]
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
@@ -45,13 +48,16 @@ androidx-browser = "androidx.browser:browser:1.5.0"
 androidx-collection = "androidx.collection:collection-ktx:1.2.0"
 androidx-core = "androidx.core:core-ktx:1.10.0"
 androidx-emoji = "androidx.emoji:emoji:1.1.0"
-androidx-datastore = "androidx.datastore:datastore-preferences:1.0.0"
+androidx-datastore = "androidx.datastore:datastore:1.0.0"
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.0.0"
 
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxlifecycle" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxlifecycle" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidxlifecycle" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxlifecycle" }
+
+protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protobuf" }
+protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 
 androidx-hilt-navigationcompose = "androidx.hilt:hilt-navigation-compose:1.0.0"
 androidx-hilt-work = "androidx.hilt:hilt-work:1.0.0"

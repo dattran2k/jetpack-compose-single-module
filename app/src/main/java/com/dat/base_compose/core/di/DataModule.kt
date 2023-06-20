@@ -4,6 +4,7 @@ import com.dat.base_compose.data.respository.todo.TodoRepository
 import com.dat.base_compose.data.respository.todo.TodoRepositoryIml
 import com.dat.base_compose.data.respository.user.UserDataRepository
 import com.dat.base_compose.data.respository.user.UserDataRepositoryImpl
+
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -18,12 +19,13 @@ import dagger.hilt.components.SingletonComponent
 interface DataModule {
     @Binds
     fun bindsUserRepository(
-        userDataRepositoryImpl: UserDataRepositoryImpl
+        userDataRepositoryImpl: UserDataRepositoryImpl,
     ): UserDataRepository
 
     @Binds
     fun bindTodoRepository(
-        todoRepositoryImpl: TodoRepositoryIml
+        todoRepositoryImpl: TodoRepositoryIml,
     ): TodoRepository
+
 
 }

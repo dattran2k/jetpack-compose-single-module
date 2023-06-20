@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.android.dagger.hilt.library)
 //    alias(libs.plugins.android.dagger.hilt)
     kotlin("kapt")
+    alias(libs.plugins.protobuf)
 }
 
 android {
@@ -79,9 +80,11 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.activity.activity)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.datastore)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.core.splashscreen)
+    //data store
+    implementation(libs.androidx.datastore)
+    implementation(libs.protobuf.kotlin.lite)
 
     // hilt
     implementation(libs.androidx.hilt.navigationcompose)
@@ -140,4 +143,22 @@ dependencies {
 // Allow references to generated code
 kapt {
     correctErrorTypes = true
+}
+// Setup protobuf configuration, generating lite Java and Kotlin classes
+protobuf {
+    protoc {
+        artifact = libs.protobuf.protoc.get().toString()
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                register("java") {
+                    option("lite")
+                }
+                register("kotlin") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }

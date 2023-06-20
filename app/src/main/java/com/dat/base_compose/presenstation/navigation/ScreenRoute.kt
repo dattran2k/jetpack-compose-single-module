@@ -9,10 +9,6 @@ abstract class ScreenRoute(val route: String) {
     open fun navigate(navController: NavController) {
         navController.navigate(route)
     }
-    // main
-
-
-    // end main
 }
 
 
