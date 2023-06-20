@@ -10,9 +10,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,11 +19,12 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val todoRepository: TodoRepository) :
     ViewModel() {
-    private var curPage = 0
+
     private var todoList = MutableStateFlow<List<TodoItem>>(listOf())
     var isLoading = MutableStateFlow(false)
     var endReached = MutableStateFlow(false)
     var errorMessage = MutableStateFlow("")
+    var curPage = MutableStateFlow(1)
     val homeUiState: StateFlow<HomeUIState> =
         combine(
             todoList,
@@ -41,15 +40,17 @@ class HomeViewModel @Inject constructor(private val todoRepository: TodoReposito
         )
 
     init {
-        loadData()
+        refreshData()
     }
 
-    fun loadData(isReset: Boolean = false) {
-        if (isReset)
-            resetData()
+    fun refreshData() {
+        curPage.value = 1
+        getTodos()
+    }
+
+    fun getTodos() {
         viewModelScope.launch {
-            // This still have too much boilerplate code, how to improve this ?
-            todoRepository.getDataWithFlow().map {
+            todoRepository.getDataWithFlow().collect {
                 when (it) {
                     is Resource.Error -> {
                         errorMessage.emit(it.message)
@@ -63,18 +64,14 @@ class HomeViewModel @Inject constructor(private val todoRepository: TodoReposito
                         // delay for demo load
                         delay(2000)
                         isLoading.emit(false)
-                        if (curPage == 1)
+                        if (curPage.value == 1)
                             todoList.value = it.data
                         else
                             todoList.value += it.data
-                        curPage++
+                        curPage.value++
                     }
                 }
-            }.collect()
+            }
         }
-    }
-
-    private fun resetData() {
-        curPage = 1
     }
 }
