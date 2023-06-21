@@ -42,6 +42,9 @@ fun Project.configureAndroidProject() {
             sourceCompatibility = JavaVersion.VERSION_18
             targetCompatibility = JavaVersion.VERSION_18
         }
+        composeOptions {
+            kotlinCompilerExtensionVersion = libs.versions.composecompiler.get()
+        }
 
     }
 }

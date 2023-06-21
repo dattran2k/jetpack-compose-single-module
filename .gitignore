@@ -12,6 +12,3 @@ keystore.zip
 key/
 key.zip
 keystore.jks
-
-/app/src/test/
-/app/src/androidTest/

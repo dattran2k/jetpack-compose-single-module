@@ -8,5 +8,5 @@ data class HomeUIState(
     val listTodoItem: List<TodoItem> = listOf(),
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
-    val endReached : Boolean = false
+    val isEndReached : Boolean = false
 )

@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application)
@@ -95,16 +93,15 @@ dependencies {
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material.material)
     implementation(libs.compose.material.material3)
-    implementation(libs.compose.ui.test)
+
     implementation(libs.compose.ui.tooling)
-    implementation(libs.compose.ui.test.manifest)
+
 
     // testing
+    androidTestImplementation(platform(libs.compose.bom))
     testImplementation("org.mockito:mockito-core:3.12.4")
-//    testImplementation(libs.junit)
-//    androidTestImplementation(libs.androidx.test.junit)
-//    androidTestImplementation(libs.androidx)
-//    androidTestImplementation(libs.androidx.test.espresso)
+    androidTestImplementation(libs.compose.ui.test)
+    debugImplementation(libs.compose.ui.test.manifest)
 
     // hilt
     implementation(libs.dagger.hilt.library)

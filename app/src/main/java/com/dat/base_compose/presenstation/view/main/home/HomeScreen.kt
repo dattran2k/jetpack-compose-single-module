@@ -31,17 +31,20 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dat.base_compose.core.common.TestTag.CIRCULAR_PROGRESS_INDICATOR_TAG
+import com.dat.base_compose.core.common.TestTag.CIRCULAR_PROGRESS_INDICATOR_TAG_2
+import com.dat.base_compose.core.common.TestTag.LAZY_COLUMN_TAG
 import com.dat.base_compose.data.model.TodoItem
 import com.dat.base_compose.presenstation.navigation.ScreenRoute
 import com.dat.base_compose.presenstation.theme.BaseJetpackComposeTheme
 import com.dat.base_compose.presenstation.theme.LocalCustomColorTheme
 
 object HomeScreenRote : ScreenRoute("Home")
-
 
 @Composable
 fun HomeRoute(
@@ -80,12 +83,17 @@ fun HomeScreen(
             .fillMaxSize()
             .pullRefresh(pullRefreshState),
     ) {
-        LazyColumn(contentPadding = PaddingValues(16.dp), modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            contentPadding = PaddingValues(16.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .testTag(LAZY_COLUMN_TAG),
+        ) {
             val listTodo = homeUIState.listTodoItem
             val itemCount = listTodo.size
             items(itemCount) {
                 val item = listTodo[it]
-                if (it >= itemCount - 1 && !homeUIState.endReached && !homeUIState.isLoading) {
+                if (it >= itemCount - 1 && !homeUIState.isEndReached && !homeUIState.isLoading) {
                     getNewData()
                 }
                 ItemTodo(item, Modifier.clickable {
@@ -98,6 +106,7 @@ fun HomeScreen(
                             .padding(top = 16.dp)
                             .size(16.dp)
                             .wrapContentSize(Alignment.Center)
+                            .testTag(CIRCULAR_PROGRESS_INDICATOR_TAG_2)
                     )
             }
         }
@@ -107,6 +116,7 @@ fun HomeScreen(
                     .fillMaxSize()
                     .size(48.dp)
                     .wrapContentSize(Alignment.Center)
+                    .testTag(CIRCULAR_PROGRESS_INDICATOR_TAG)
 
             )
         PullRefreshIndicator(isPullRefreshRefreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
@@ -114,7 +124,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun ItemTodo(item: TodoItem, modifier: Modifier = Modifier)  {
+fun ItemTodo(item: TodoItem, modifier: Modifier = Modifier) {
     Column(
         modifier
             .padding(top = 16.dp)
@@ -141,7 +151,7 @@ fun ItemTodo(item: TodoItem, modifier: Modifier = Modifier)  {
 
 @Preview
 @Composable
-private fun ItemTodoPreview(){
+private fun ItemTodoPreview() {
     BaseJetpackComposeTheme() {
         ItemTodo(
             item = TodoItem(
