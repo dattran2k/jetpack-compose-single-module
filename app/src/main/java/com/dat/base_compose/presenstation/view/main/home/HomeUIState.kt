@@ -7,6 +7,6 @@ import com.dat.base_compose.data.model.TodoItem
 data class HomeUIState(
     val listTodoItem: List<TodoItem> = listOf(),
     val isLoading: Boolean = false,
-    val message: String? = null,
+    val errorMessage: String? = null,
     val endReached : Boolean = false
 )

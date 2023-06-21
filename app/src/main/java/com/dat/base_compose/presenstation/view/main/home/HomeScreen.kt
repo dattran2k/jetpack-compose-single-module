@@ -48,23 +48,29 @@ fun HomeRoute(
     onNavigateDetail: (todo: TodoItem) -> Unit, viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val homeUIState by viewModel.homeUiState.collectAsStateWithLifecycle()
-    val currentPage by viewModel.curPage.collectAsStateWithLifecycle()
-    var refreshing by remember {
+    var isPullRefreshRefreshing by remember {
         mutableStateOf(false)
     }
-    val pullRefreshState = rememberPullRefreshState(refreshing, {
-        refreshing = false
+    val pullRefreshState = rememberPullRefreshState(isPullRefreshRefreshing, {
+        isPullRefreshRefreshing = false
         viewModel.refreshData()
     })
-    HomeScreen(homeUIState, refreshing,currentPage, pullRefreshState, onNavigateDetail, viewModel::getTodos)
+    HomeScreen(
+        homeUIState,
+        viewModel.curPage,
+        isPullRefreshRefreshing,
+        pullRefreshState,
+        onNavigateDetail,
+        viewModel::getTodos
+    )
 }
 
 
 @Composable
 fun HomeScreen(
     homeUIState: HomeUIState,
-    refreshing: Boolean = false,
     currentPage: Int = 1,
+    isPullRefreshRefreshing: Boolean = false,
     pullRefreshState: PullRefreshState = getDefaultPullRefreshState(),
     onNavigateDetail: (todo: TodoItem) -> Unit = {},
     getNewData: () -> Unit = {},
@@ -103,12 +109,12 @@ fun HomeScreen(
                     .wrapContentSize(Alignment.Center)
 
             )
-        PullRefreshIndicator(refreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
+        PullRefreshIndicator(isPullRefreshRefreshing, pullRefreshState, Modifier.align(Alignment.TopCenter))
     }
 }
 
 @Composable
-fun ItemTodo(item: TodoItem, modifier: Modifier = Modifier) {
+fun ItemTodo(item: TodoItem, modifier: Modifier = Modifier)  {
     Column(
         modifier
             .padding(top = 16.dp)
@@ -135,7 +141,7 @@ fun ItemTodo(item: TodoItem, modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-private fun ItemTodoPreview() {
+private fun ItemTodoPreview(){
     BaseJetpackComposeTheme() {
         ItemTodo(
             item = TodoItem(
@@ -143,6 +149,7 @@ private fun ItemTodoPreview() {
             ),
         )
     }
+
 }
 
 @Preview
@@ -191,6 +198,5 @@ private fun PreviewEmpty() {
 @Composable
 fun getDefaultPullRefreshState(isRefresh: Boolean = false): PullRefreshState {
     return rememberPullRefreshState(refreshing = isRefresh, onRefresh = {
-
     })
 }
