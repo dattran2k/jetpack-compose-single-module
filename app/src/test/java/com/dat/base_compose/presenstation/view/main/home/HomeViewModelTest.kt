@@ -45,12 +45,12 @@ class HomeViewModelTest {
 
         viewModel.refreshData()
 
-        assertEquals(1, viewModel.curPage.value)
+        assertEquals(1, viewModel.curPage)
 
         val todoItems = fakeRepository.success()
         // after success + curPageValue will increase 1
-        assertEquals(2, viewModel.curPage.value)
-        assertEquals(todoItems, viewModel.todoList.value)
+        assertEquals(2, viewModel.curPage)
+        assertEquals(todoItems, viewModel.homeUiState.value.listTodoItem)
 
         collectJob1.cancel()
     }
@@ -65,7 +65,6 @@ class HomeViewModelTest {
             viewModel.refreshData()
 
             // loading
-            assertEquals(true, viewModel.isLoading.value)
             assertEquals(true, viewModel.homeUiState.value.isLoading)
             // success
             val todoItems = fakeRepository.success()
@@ -86,13 +85,12 @@ class HomeViewModelTest {
         viewModel.refreshData()
 
         // loading
-        assertEquals(true, viewModel.isLoading.value)
         assertEquals(true, viewModel.homeUiState.value.isLoading)
         // fail
         val error = fakeRepository.error()
 
         assertEquals(false, viewModel.homeUiState.value.isLoading)
-        assertEquals(error.message, viewModel.homeUiState.value.message)
+        assertEquals(error.message, viewModel.homeUiState.value.errorMessage)
 
         collectJob1.cancel()
     }

@@ -98,10 +98,14 @@ dependencies {
 
 
     // testing
-    androidTestImplementation(platform(libs.compose.bom))
-    testImplementation("org.mockito:mockito-core:3.12.4")
-    androidTestImplementation(libs.compose.ui.test)
-    debugImplementation(libs.compose.ui.test.manifest)
+    testImplementation (platform(libs.compose.bom))
+    testImplementation ("org.mockito:mockito-core:3.12.4")
+    testImplementation (libs.compose.ui.test)
+
+    androidTestImplementation (platform(libs.compose.bom))
+    androidTestImplementation (libs.compose.ui.test)
+
+    debugImplementation (libs.compose.ui.test.manifest)
 
     // hilt
     implementation(libs.dagger.hilt.library)
