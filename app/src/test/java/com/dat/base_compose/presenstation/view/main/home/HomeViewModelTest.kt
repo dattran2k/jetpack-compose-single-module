@@ -25,14 +25,11 @@ class HomeViewModelTest {
     @Before
     fun setup() {
         fakeRepository = FakeTodoRepository()
-
         viewModel = HomeViewModel(fakeRepository)
     }
 
     @After
     fun tearDown() {
-        fakeRepository = FakeTodoRepository()
-        viewModel = HomeViewModel(fakeRepository)
     }
 
     @Test
