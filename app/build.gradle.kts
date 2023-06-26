@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application)
@@ -5,7 +7,6 @@ plugins {
     alias(libs.plugins.cacheFixPlugin)
     alias(libs.plugins.ksp)
     alias(libs.plugins.android.dagger.hilt.library)
-//    alias(libs.plugins.android.dagger.hilt)
     kotlin("kapt")
     alias(libs.plugins.protobuf)
 }
@@ -87,6 +88,8 @@ dependencies {
     // hilt
     implementation(libs.androidx.hilt.navigationcompose)
     implementation(libs.androidx.hilt.work)
+    implementation(libs.dagger.hilt.library)
+    kapt(libs.dagger.hilt.compiler)
 
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui.ui)
@@ -106,10 +109,6 @@ dependencies {
     androidTestImplementation (libs.compose.ui.test)
 
     debugImplementation (libs.compose.ui.test.manifest)
-
-    // hilt
-    implementation(libs.dagger.hilt.library)
-    kapt(libs.dagger.hilt.compiler)
 
     // retrofit
     implementation(libs.retrofit)
@@ -134,7 +133,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
     // Coil
-    implementation(libs.coil.compose)
     implementation(libs.coil.compose)
     implementation(libs.accompanist.coil)
 

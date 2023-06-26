@@ -1,14 +1,9 @@
-import com.android.build.gradle.internal.lint.AndroidLintTask
-import com.android.build.gradle.internal.lint.AndroidLintAnalysisTask
-
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.ksp) apply false
-    alias(libs.plugins.gms.googleServices) apply false
-    alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.android.dagger.hilt.library) apply false
 }
 allprojects {
@@ -29,6 +24,7 @@ allprojects {
     }
 }
 
+@Suppress("UnstableApiUsage")
 fun Project.configureAndroidProject() {
     extensions.configure<com.android.build.gradle.BaseExtension> {
         compileSdkVersion(libs.versions.compileSdk.get().toInt())
